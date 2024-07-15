@@ -1,0 +1,583 @@
+###---------------------------###
+###-------ItzStandEditor------###
+###---------ItzIsonn_---------###
+###---------------------------###
+
+# Использовать ли PlaceholderAPI
+try_hook_papi: true
+
+# Требовать ли дополнительно зажимать шифт для открытия меню (если false - только ПКМ)
+require_shift: true
+
+# Сохранять ли информацию о последней открытой секции после закрытия меню
+save_section: false
+
+# Блокировать ли попытку установить на слот для брони не броню
+block_not_armor: true
+
+# Шаблон отображения секции
+sections_template:
+  active: "<#428d49>• <#58ea68>%name%"
+  not_active: "<#6a6a6a>• <#a9a9a9>%name%"
+
+translation:
+  noPerm: "<red>У вас нет прав!"
+  usage: "<red>Использование: /itzstandeditor reload"
+  reloaded: "<green>ItzStandEditor перезагружен!"
+  on: "<green>Включено"
+  off: "<red>Выключено"
+
+connecting_ray:
+  enabled: true
+  particle: END_ROD
+  amount: 1
+  # Дистанция между двумя партиклами
+  period: 0.5
+  # Скорость спавна (в тиках)
+  rate: 10
+
+# Предметы
+# В functions также доступен COPY_ARMOR, но это может привести к дюпу брони, используйте осторожно
+items:
+  navigator:
+    # Материал
+    material: COMPASS
+    # Функции предмета (left - на ЛКМ, right - на ПКМ, all - на любую кнопку)
+    functions:
+      nav_next: LEFT
+      nav_prev: RIGHT
+    # Название предмета
+    name: ""
+    # Описание предмета
+    lore:
+      - "  » <gradient:#ffe259:#ffa751>Навигация</gradient>  "
+      - ""
+      - "  %sections%  " # Может быть задействовано несколько строчек в зависимости от кол-ва секций
+      - ""
+  armor_head:
+    material: LEATHER_HELMET
+    functions: 
+      armor_head: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Слот шлема</gradient>  "
+      - ""
+      - "  Текущий предмет: <#7371ec>%armor_head%  "
+      - ""
+  armor_chest:
+    material: LEATHER_CHESTPLATE
+    functions: 
+      armor_chest: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Слот нагрудника</gradient>  "
+      - ""
+      - "  Текущий предмет: <#7371ec>%armor_chest%  "
+      - ""
+  armor_legs:
+    material: LEATHER_LEGGINGS
+    functions:
+      armor_legs: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Слот понож</gradient>  "
+      - ""
+      - "  Текущий предмет: <#7371ec>%armor_legs%  "
+      - ""
+  armor_feet:
+    material: LEATHER_BOOTS
+    functions:
+      armor_feet: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Слот ботинок</gradient>  "
+      - ""
+      - "  Текущий предмет: <#7371ec>%armor_feet%  "
+      - ""
+  armor_hand:
+    material: WOODEN_SWORD
+    functions:
+      armor_hand: RIGHT
+      armor_offhand: LEFT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Слот рук</gradient>  "
+      - ""
+      - "  Предмет в левой руке: <#7371ec>%armor_offhand%  "
+      - "  Предмет в правой руке: <#7371ec>%armor_hand%  "
+      - ""
+  block_head:
+    material: CHAINMAIL_HELMET
+    functions:
+      block_head: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Заблокировать слот шлема</gradient>  "
+      - ""
+      - "  Статус: %blocked_head%  "
+      - ""
+  block_chest:
+    material: CHAINMAIL_CHESTPLATE
+    functions:
+      block_chest: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Заблокировать слот нагрудника</gradient>  "
+      - ""
+      - "  Статус: %blocked_chest%  "
+      - ""
+  block_legs:
+    material: CHAINMAIL_LEGGINGS
+    functions:
+      block_legs: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Заблокировать слот понож</gradient>  "
+      - ""
+      - "  Статус: %blocked_legs%  "
+      - ""
+  block_feet:
+    material: CHAINMAIL_BOOTS
+    functions:
+      block_feet: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Заблокировать слот ботинок</gradient>  "
+      - ""
+      - "  Статус: %blocked_feet%  "
+      - ""
+  block_hand:
+    material: STONE_SWORD
+    functions:
+      block_hand: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Заблокировать слот рук</gradient>  "
+      - ""
+      - "  Статус : <#7371ec>%blocked_hand%  "
+      - ""
+  appear_plate:
+    material: CLAY
+    functions:
+      appear_plate: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Видимость плиты</gradient>  "
+      - ""
+      - "  Статус: %appear_plate%  "
+      - ""
+  appear_arms:
+    material: STICK
+    functions:
+      appear_arms: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Видимость рук</gradient>  "
+      - ""
+      - "  Статус: %appear_arms%  "
+      - ""
+  appear_invisibility:
+    material: GLASS_BOTTLE
+    functions:
+      appear_invisibility: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Невидимость</gradient>  "
+      - ""
+      - "  Статус: %appear_invisibility%  "
+      - ""
+  appear_glowing:
+    material: GLOW_INK_SAC
+    functions:
+      appear_glowing: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Свечение</gradient>  "
+      - ""
+      - "  Статус: %appear_glowing%  "
+      - ""
+  appear_small:
+    material: MAGMA_CREAM
+    functions:
+      appear_small: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Маленький</gradient>  "
+      - ""
+      - "  Статус: %appear_small%  "
+      - ""
+  appear_gravity:
+    material: FEATHER
+    functions:
+      appear_gravity: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Гравитация</gradient>  "
+      - ""
+      - "  Статус: %appear_gravity%  "
+      - ""
+  appear_invulnerability:
+    material: IRON_INGOT
+    functions:
+      appear_invulnerability: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Неуязвимость</gradient>  "
+      - ""
+      - "  Статус: %appear_invulnerability%  "
+      - ""
+  rotate_head_x:
+    material: RED_DYE
+    functions:
+      rotate_head_x_plus: LEFT
+      rotate_head_x_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот головы по X</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_head_x%  "
+      - ""
+  rotate_head_y:
+    material: LIME_DYE
+    functions:
+      rotate_head_y_plus: LEFT
+      rotate_head_y_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот головы по Y</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_head_y%  "
+      - ""
+  rotate_head_z:
+    material: BLUE_DYE
+    functions:
+      rotate_head_z_plus: LEFT
+      rotate_head_z_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот головы по Z</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_head_z%  "
+      - ""
+  rotate_head_clear:
+    material: FEATHER
+    functions:
+      rotate_head_clear: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить изменения головы</gradient>  "
+      - ""
+  rotate_leftarm_x:
+    material: RED_DYE
+    functions:
+      rotate_leftarm_x_plus: LEFT
+      rotate_leftarm_x_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой руки по X</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftarm_x%  "
+      - ""
+  rotate_leftarm_y:
+    material: LIME_DYE
+    functions:
+      rotate_leftarm_y_plus: LEFT
+      rotate_leftarm_y_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой руки по Y</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftarm_y%  "
+      - ""
+  rotate_leftarm_z:
+    material: BLUE_DYE
+    functions:
+      rotate_leftarm_z_plus: LEFT
+      rotate_leftarm_z_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой руки по Z</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftarm_z%  "
+      - ""
+  rotate_leftarm_clear:
+    material: FEATHER
+    functions:
+      rotate_leftarm_clear: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить изменения левой руки</gradient>  "
+      - ""
+  rotate_rightarm_x:
+    material: RED_DYE
+    functions:
+      rotate_rightarm_x_plus: LEFT
+      rotate_rightarm_x_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой руки по X</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightarm_x%  "
+      - ""
+  rotate_rightarm_y:
+    material: LIME_DYE
+    functions:
+      rotate_rightarm_y_plus: LEFT
+      rotate_rightarm_y_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой руки по Y</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightarm_y%  "
+      - ""
+  rotate_rightarm_z:
+    material: BLUE_DYE
+    functions:
+      rotate_rightarm_z_plus: LEFT
+      rotate_rightarm_z_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой руки по Z</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightarm_z%  "
+      - ""
+  rotate_rightarm_clear:
+    material: FEATHER
+    functions:
+      rotate_rightarm_clear: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить изменения правой руки</gradient>  "
+      - ""
+  rotate_leftleg_x:
+    material: RED_DYE
+    functions:
+      rotate_leftleg_x_plus: LEFT
+      rotate_leftleg_x_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой ноги по X</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftleg_x%  "
+      - ""
+  rotate_leftleg_y:
+    material: LIME_DYE
+    functions:
+      rotate_leftleg_y_plus: LEFT
+      rotate_leftleg_y_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой ноги по Y</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftleg_y%  "
+      - ""
+  rotate_leftleg_z:
+    material: BLUE_DYE
+    functions:
+      rotate_leftleg_z_plus: LEFT
+      rotate_leftleg_z_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот левой ноги по Z</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_leftleg_z%  "
+      - ""
+  rotate_leftleg_clear:
+    material: FEATHER
+    functions:
+      rotate_leftleg_clear: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить изменения левой ноги</gradient>  "
+      - ""
+  rotate_rightleg_x:
+    material: RED_DYE
+    functions:
+      rotate_rightleg_x_plus: LEFT
+      rotate_rightleg_x_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой ноги по X</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightleg_x%  "
+      - ""
+  rotate_rightleg_y:
+    material: LIME_DYE
+    functions:
+      rotate_rightleg_y_plus: LEFT
+      rotate_rightleg_y_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой ноги по Y</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightleg_y%  "
+      - ""
+  rotate_rightleg_z:
+    material: BLUE_DYE
+    functions:
+      rotate_rightleg_z_plus: LEFT
+      rotate_rightleg_z_minus: RIGHT
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Поворот правой ноги по Z</gradient>  "
+      - ""
+      - "  Градусов: <#7371ec>%rotate_rightleg_z%  "
+      - ""
+  rotate_rightleg_clear:
+    material: FEATHER
+    functions:
+      rotate_rightleg_clear: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить изменения правой ноги</gradient>  "
+      - ""
+  copy_rotations:
+    material: WRITABLE_BOOK
+    functions:
+      copy_rotate_head: ALL
+      copy_rotate_leftarm: ALL
+      copy_rotate_rightarm: ALL
+      copy_rotate_leftleg: ALL
+      copy_rotate_rightleg: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Скопировать поворот тела</gradient>  "
+      - ""
+  copy_appear:
+    material: WRITABLE_BOOK
+    functions:
+      copy_appear_plate: ALL
+      copy_appear_arms: ALL
+      copy_appear_invisibility: ALL
+      copy_appear_glowing: ALL
+      copy_appear_small: ALL
+      copy_appear_gravity: ALL
+      copy_appear_invulnerability: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Скопировать внешность</gradient>  "
+      - ""
+  paste:
+    material: WRITTEN_BOOK
+    functions:
+      paste_rotate_head: ALL
+      paste_rotate_leftarm: ALL
+      paste_rotate_rightarm: ALL
+      paste_rotate_leftleg: ALL
+      paste_rotate_rightleg: ALL
+      paste_appear_plate: ALL
+      paste_appear_arms: ALL
+      paste_appear_invisibility: ALL
+      paste_appear_glowing: ALL
+      paste_appear_small: ALL
+      paste_appear_gravity: ALL
+      paste_appear_invulnerability: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Вставить</gradient>  "
+      - ""
+  clear_clipboard:
+    material: PAPER
+    functions:
+      clear_rotate_head: ALL
+      clear_rotate_leftarm: ALL
+      clear_rotate_rightarm: ALL
+      clear_rotate_leftleg: ALL
+      clear_rotate_rightleg: ALL
+      clear_appear_plate: ALL
+      clear_appear_arms: ALL
+      clear_appear_invisibility: ALL
+      clear_appear_glowing: ALL
+      clear_appear_small: ALL
+      clear_appear_gravity: ALL
+      clear_appear_invulnerability: ALL
+    name: ""
+    lore:
+      - "  » <gradient:#71bfec:#6b5db3>Очистить буфер обмена</gradient>  "
+      - ""
+  dec:
+    material: BLACK_STAINED_GLASS_PANE
+    name: ""
+
+# Меню
+menu:
+  # Название меню
+  title: " » Редактирование стенда"
+  # Размер меню (кратно 9)
+  size: 36
+  # Предметы, отображаемые во всех секциях (айди: слот)
+  items:
+    dec:
+      - 0
+      - 8
+      - 9
+      - 17
+      - 18
+      - 26
+      - 35
+    navigator: 27
+
+
+# Секции
+sections:
+  equipment:
+    # Название секции
+    name: "Экипировка"
+    # Предметы, уникальные для этой секции (айди: слот)
+    items:
+      armor_head: 11
+      armor_chest: 12
+      armor_legs: 13
+      armor_feet: 14
+      armor_hand: 15
+      block_head: 20
+      block_chest: 21
+      block_legs: 22
+      block_feet: 23
+      block_hand: 24
+  appearance:
+    name: "Внешность"
+    items:
+      appear_plate: 11
+      appear_arms: 12
+      appear_invisibility: 13
+      appear_glowing: 14
+      appear_small: 15
+      appear_gravity: 20
+      appear_invulnerability: 21
+  rotate_head:
+    name: "Поворот головы"
+    items:
+      rotate_head_x: 11
+      rotate_head_y: 12
+      rotate_head_z: 13
+      rotate_head_clear: 14
+  rotate_arms:
+    name: "Поворот рук"
+    items:
+      rotate_leftarm_x: 11
+      rotate_leftarm_y: 12
+      rotate_leftarm_z: 13
+      rotate_leftarm_clear: 14
+      rotate_rightarm_x: 20
+      rotate_rightarm_y: 21
+      rotate_rightarm_z: 22
+      rotate_rightarm_clear: 23
+  rotate_legs:
+    name: "Поворот ног"
+    items:
+      rotate_leftleg_x: 11
+      rotate_leftleg_y: 12
+      rotate_leftleg_z: 13
+      rotate_leftleg_clear: 14
+      rotate_rightleg_x: 20
+      rotate_rightleg_y: 21
+      rotate_rightleg_z: 22
+      rotate_rightleg_clear: 23
+  copy_data:
+    name: "Буфер обмена"
+    items:
+      copy_rotations: 11
+      copy_appear: 12
+      paste: 20
+      clear_clipboard: 21
