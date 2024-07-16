@@ -37,7 +37,7 @@ connecting_ray:
   rate: 10
 
 # Предметы
-# В functions также доступен COPY_ARMOR, но это может привести к дюпу брони, используйте осторожно
+# Все функции можно посмотреть на вики плагина
 items:
   navigator:
     # Материал
@@ -157,7 +157,7 @@ items:
       - "  Статус : <#7371ec>%blocked_hand%  "
       - ""
   appear_plate:
-    material: CLAY
+    material: CLAY_BALL
     functions:
       appear_plate: ALL
     name: ""

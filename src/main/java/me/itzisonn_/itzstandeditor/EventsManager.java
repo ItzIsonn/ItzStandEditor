@@ -42,7 +42,7 @@ public class EventsManager implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e) {
         if (!plugin.getGuiManager().getInventories().containsKey((Player) e.getPlayer())) return;
-        plugin.getGuiManager().close((Player) e.getPlayer());
+        plugin.getGuiManager().close((Player) e.getPlayer(), false);
     }
 
     @EventHandler
@@ -51,7 +51,7 @@ public class EventsManager implements Listener {
 
         for (Player player : plugin.getGuiManager().getInventories().keySet()) {
             if (plugin.getGuiManager().getInventories().get(player).getStand() == e.getEntity()) {
-                plugin.getGuiManager().close(player);
+                plugin.getGuiManager().close(player, true);
             }
         }
     }
@@ -165,7 +165,7 @@ public class EventsManager implements Listener {
                     }
 
                     if (functionId.matches("^CLOSE")) {
-                        plugin.getGuiManager().close(player);
+                        plugin.getGuiManager().close(player, true);
                         return;
                     }
                 }

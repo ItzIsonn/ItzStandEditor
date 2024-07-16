@@ -40,10 +40,10 @@ public class GuiManager {
         queuePlayer = null;
     }
 
-    public void close(Player player) {
+    public void close(Player player, boolean b) {
         if (!inventories.containsKey(player)) return;
         if (!plugin.getConfigManager().getSaveSection()) inventories.get(player).resetSection();
-        if (player.getOpenInventory().getTopInventory() == inventories.get(player).getInventory()) player.closeInventory();
+        if (b) player.closeInventory();
         inventories.get(player).updateStand(null);
     }
 

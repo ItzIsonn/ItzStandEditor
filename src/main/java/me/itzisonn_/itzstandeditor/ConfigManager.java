@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
@@ -107,12 +108,17 @@ public class ConfigManager {
             ConfigurationSection configurationSection = config.getConfigurationSection("items." + itemId);
 
             ItemStack item = new ItemStack(Material.valueOf(Objects.requireNonNull(configurationSection).getString("material", "stone").toUpperCase()));
-            item.addItemFlags(ItemFlag.values());
-
             ItemMeta itemMeta = item.getItemMeta();
+
+            itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS, ItemFlag.HIDE_ATTRIBUTES);
+            itemMeta.setAttributeModifiers(null);
+
             itemMeta.displayName(MiniMessage.miniMessage().deserialize("<i:false><white>" +
                     parsePlaceholders(data, configurationSection.getString("name", "?"))));
             itemMeta.lore(convertStringList(configurationSection.getStringList("lore"), data));
+
+            if (configurationSection.getBoolean("enchanted", false)) itemMeta.addEnchant(Enchantment.FORTUNE, 1, true);
+            item.setAmount(configurationSection.getInt("amount", 1));
 
             if (configurationSection.getConfigurationSection("functions") != null) {
                 List<String> functions = Lists.newArrayList();
