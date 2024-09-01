@@ -42,6 +42,7 @@ public class ConfigManager {
     }
 
 
+
     public boolean getTryHookPapi() {
         return config.getBoolean("try_hook_papi", true);
     }
